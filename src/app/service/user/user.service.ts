@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable';
-import { User } from '../model/user';
+import { User } from '../../model/user';
 
 @Injectable()
 export class UserService {
@@ -15,8 +15,6 @@ export class UserService {
 
   public findAll(): Observable<User[]> {
     this.users = this.http.get<User[]>(this.usersUrl);
-    console.log(this.users[1]);
-    
     return this.users
   }
 
@@ -25,7 +23,7 @@ export class UserService {
   }
   
   public delete(id: number) {
-    return this.http.delete(this.usersUrl+"/"+id);
+    this.http.delete(this.usersUrl+"/"+id).subscribe(() => console.log("user deleted"))
   }
 
 }

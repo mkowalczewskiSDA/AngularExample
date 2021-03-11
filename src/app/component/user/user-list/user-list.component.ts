@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../../../model/user';
 import { UserService } from '../../../service/user/user.service';
 
@@ -11,13 +12,16 @@ export class UserListComponent implements OnInit {
 
   users: User[]
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService
+    ) { }
 
   ngOnInit() {
-    this.userService.findAll().subscribe(data => {
-      this.users = data;
-      console.log(this.users[0].firstName);
-    });
+    this.userService.findAll().subscribe(data => this.users = data);
   }
 
+  onDelete(id: number) {
+    this.userService.delete(id);
+    window.location.reload();
+  }
 }
